@@ -1,16 +1,14 @@
 'use strict';
 
-
-
-  const LENGTH = 20;
+  const LENGTH = 50,
+        NUM = 80;
   const STORAGE = [],
         INDEXS = [];
 
     function code(key) {
       let hash = 0;
         for (var i = 0; i < key.length; i++) {
-          hash = hash + key.charCodeAt(i);
-          hash = hash >>> 0;
+          hash = (NUM ^ hash) + NUM/2 - key.charCodeAt(i);
         }
         return Math.abs(hash % LENGTH);
     }
@@ -19,6 +17,7 @@
       if(key !== undefined || key.length !== undefined || value !== undefined || value.length !== undefined){
         let index = code(key);
         STORAGE[index] = value;
+        INDEXS.push(index);
       }
     };
 
@@ -27,7 +26,7 @@
       if (STORAGE[index]!== undefined) {
         return key + ' : ' + STORAGE[index];
       }else {
-        return undefined;
+        return 'dont exist';
       }
     }
 
@@ -41,17 +40,5 @@
     function remove(key) {
       let index = code(key);
       STORAGE[index] = undefined;
-    }
-    let obj = {
-      albania:'tirana',
-      algeria:'algiers',
-      cuba:'havana',
-      egypt:'cairo'
-    };
-    for (var key in obj) {
-      add(key,obj[key]);
-    };
-    remove('cuba');
-    console.log(STORAGE);
-    console.log(show('cuba'));//undefined
-    console.log(show_index('egypt'));
+      INDEXS.splice(INDEXS.indexOf(index),1);
+      }
