@@ -1,5 +1,5 @@
+'use strict';
 
-// Binary Search Tree
 class Main{
   constructor(num) {
     this.num = num;
@@ -62,21 +62,25 @@ class binaryTree{
     }
     return curr.num;
   }
-  inOrder(){
+  preOrder(){
     let result = [];
     const bypass = node => {
-        node.left && bypass(node.left);
         result.push(node.num);
+
+        node.left && bypass(node.left);
+
         node.right && bypass(node.right);
       }
       bypass(this.root);
       return result;
     }
-  preOrder(){
+  inOrder(){
     let result = [];
     const bypass = node => {
-        result.push(node.num);
         node.left && bypass(node.left);
+
+        result.push(node.num);
+
         node.right && bypass(node.right);
       }
       bypass(this.root);
@@ -92,22 +96,11 @@ class binaryTree{
       bypass(this.root);
       return result;
       }
-  //verifies if num exist in tree
-  //NEED TO DELETE
-  manifest(num){
-    let curr = this.root;
-    while (curr.num !== num) {
-      if (num < curr.num) {
-        curr = curr.left;
-      } else {
-        curr = curr.right;
-      }
-      if (curr === null){
-        return null;
-      }
-    }
-    return curr;
+  //show Tree
+  show_tree(){
+    return this.root;
   }
+  //verifies if num exist in tree
   find(num){
     let curr = this.root;
     while (curr.num !== num) {
@@ -122,26 +115,6 @@ class binaryTree{
     }
     return curr;
   }
-  //remove
-  remove(num){
-    let main = this.root;
-    if (main.left !== null && main.right !== null){
-      //console.log(main.left,main.right);
-      main.num = null;
-    }
-    //return main;
-
-  }
-
-
 }
 
 const b = new binaryTree();
-
-b.add(9);
-b.add(12);
-b.add(43);
-b.add(3);
-b.add(5);
-console.log(b.preOrder());
-console.log(b.find(9));
